@@ -1,20 +1,36 @@
 package com.example.coach.model;
 
+/**
+ * Classe représentant un profil utilisateur pour le calcul de l'IMG
+ */
 public class Profil {
+    // Valeurs minimales et maximales de l'IMG selon le sexe
     private static final int minFemme = 25;
     private static final int maxFemme = 30;
     private static final int minHomme = 15;
     private static final int maxHomme = 20;
 
+    // Message et image correspondant au résultat de l'IMG
     private static final String[] message = {"trop faible", "normal", "trop élevé"};
     private static final String[] image = {"maigre", "normal", "graisse"};
+
+    // Données personnelles de l'utilisateur
     private Integer poids;
     private Integer taille;
     private Integer age;
     private Integer sexe;
+
+    // Résultats calculés
     private double img;
     private int indice;
 
+    /**
+     * Constructeur du profil et calcul automatique de l'IMG et de l'indice
+     * @param poids
+     * @param taille
+     * @param age
+     * @param sexe
+     */
     public Profil(Integer poids, Integer taille, Integer age, Integer sexe) {
         this.poids = poids;
         this.taille = taille;
@@ -24,21 +40,42 @@ public class Profil {
         this.indice = calculIndice();
     }
 
+    /**
+     * Retourne l'Indice de Masse Grasse (IMG) calculé pour le profil
+     * @return
+     */
     public double getImg() {
         return img;
     }
+
+    /**
+     * Retourne le message correspondant à l'IMG du profil
+     * @return
+     */
     public String getMessage() {
         return message[indice];
     }
 
+    /**
+     * Retourne le nom de l'image associée à l'état de l'IMG.
+     * @return
+     */
     public String getImage(){
         return image[indice];
     }
 
+    /**
+     * Indique si l'IMG du profil est dans la norme
+     * @return
+     */
     public boolean normal(){
         return indice == 1;
     }
 
+    /**
+     * Calcul l'IMG selon la formule standard
+     * @return
+     */
     private double calculImg(){
         double tailleMetres = taille / 100.0;
         return (1.2 * poids / (tailleMetres * tailleMetres))
@@ -47,6 +84,10 @@ public class Profil {
                 - 5.4;
     }
 
+    /**
+     * Détermine l'indice de l'IMG
+     * @return
+     */
     private int calculIndice(){
         int min = (sexe == 0) ? minFemme : minHomme;
         int max = (sexe == 0) ? maxFemme : maxHomme;
