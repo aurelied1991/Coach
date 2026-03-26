@@ -1,5 +1,7 @@
 package com.example.coach.model;
 
+import java.util.Date;
+
 /**
  * Classe représentant un profil utilisateur pour le calcul de l'IMG
  */
@@ -19,6 +21,7 @@ public class Profil {
     private Integer taille;
     private Integer age;
     private Integer sexe;
+    private Date dateMesure;
 
     // Résultats calculés
     private double img;
@@ -31,13 +34,30 @@ public class Profil {
      * @param age
      * @param sexe
      */
-    public Profil(Integer poids, Integer taille, Integer age, Integer sexe) {
+    public Profil(Integer poids, Integer taille, Integer age, Integer sexe, Date dateMesure) {
         this.poids = poids;
         this.taille = taille;
         this.age = age;
         this.sexe = sexe;
+        this.dateMesure = dateMesure;
         this.img = calculImg();
         this.indice = calculIndice();
+    }
+
+    public Integer getPoids(){
+        return poids;
+    }
+
+    public Integer getTaille(){
+        return taille;
+    }
+
+    public Integer getAge(){
+        return age;
+    }
+
+    public Integer getSexe(){
+        return sexe;
     }
 
     /**

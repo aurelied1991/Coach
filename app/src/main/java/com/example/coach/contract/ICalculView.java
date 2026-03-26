@@ -13,4 +13,6 @@ public interface ICalculView {
      * @param normal true si le profil est dans la norme, false sinon
      */
     void afficherResultat(String image, double img, String message, boolean normal);
+
+    void remplirChamps(Integer poids, Integer taille, Integer age, Integer sexe);
 }
