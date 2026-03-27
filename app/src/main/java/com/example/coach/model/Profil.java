@@ -60,6 +60,10 @@ public class Profil {
         return sexe;
     }
 
+    public Date getDateMesure() {
+        return dateMesure;
+    }
+
     /**
      * Retourne l'Indice de Masse Grasse (IMG) calculé pour le profil
      * @return
