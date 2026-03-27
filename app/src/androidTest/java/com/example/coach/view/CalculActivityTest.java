@@ -19,9 +19,9 @@ import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import com.example.coach.R;
 
 @RunWith(AndroidJUnit4.class)
-public class MainActivityTest {
+public class CalculActivityTest {
     @Rule
-    public ActivityScenarioRule<MainActivity> activityRule = new ActivityScenarioRule<>(MainActivity.class);
+    public ActivityScenarioRule<CalculActivity> activityRule = new ActivityScenarioRule<>(CalculActivity.class);
 
     @Test
     public void testCalculIMG(){

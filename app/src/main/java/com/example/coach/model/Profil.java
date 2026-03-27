@@ -1,12 +1,13 @@
 package com.example.coach.model;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * Classe représentant un profil utilisateur pour le calcul de l'IMG
  * Contient les données saisies + les résultats calculés (IMG)
  */
-public class Profil {
+public class Profil implements Serializable {
     // Valeurs minimales et maximales de l'IMG selon le sexe
     private static final int minFemme = 25;
     private static final int maxFemme = 30;
@@ -67,7 +68,7 @@ public class Profil {
      * @return
      */
     public double getImg() {
-        return img;
+        return calculImg();
     }
 
     /**

@@ -5,13 +5,15 @@ import com.example.coach.model.Profil;
 import java.util.List;
 
 import retrofit2.Call;
+import retrofit2.http.DELETE;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
 
 /**
- * Interface définissant les appels HTTP vers l'API REST
+ * Interface Retrofit décrivant les endpoints de l'API REST.
  * Retrofit utilise cette interface pour générer automatiquement le code permettant de communiquer avec le serveur.
  */
 public interface IRequestApi {
@@ -33,4 +35,14 @@ public interface IRequestApi {
     @FormUrlEncoded
     @POST("profil")
     Call<ResponseApi<Integer>> creerProfil(@Field("champs") String profilJson);
+
+    /**
+     * Envoi en DELETE pour supprimer un profil
+     * le nom de la table ("profil") est ajouté à l'url
+     * ainsi que le paramètre "champs" en clé et profilJson en valeur
+     * @param profilJson profil au format json (à envoyer)
+     * @return objet Call permettant d'exécuter la requête (la réponse étant le nombre de lignes supprimées)
+     */
+    @DELETE("profil/{champs}")
+    Call<ResponseApi<Integer>> supprProfil(@Path(value = "champs", encoded = true) String profilJson);
 }

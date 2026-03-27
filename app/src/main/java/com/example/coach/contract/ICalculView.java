@@ -3,9 +3,9 @@ package com.example.coach.contract;
 /**
  * Interface de la vue pour l'affichage des résultats d'IMG
  * Elle définit les actions que le Presenter peut demander à l'interface graphique
- * Toute activité (ex : MainActivity) doit implémenter cette interface.
+ * Toute activité (ex : CalculActivity) doit implémenter cette interface.
  */
-public interface ICalculView {
+public interface ICalculView extends IAllView{
     /**
      * Affiche le résultat calculé par le presenter
      * @param image nom de l'image drawable à afficher
@@ -16,7 +16,7 @@ public interface ICalculView {
     void afficherResultat(String image, double img, String message, boolean normal);
 
     /**
-     * Toute activité (ex : MainActivity) doit implémenter cette interface.
+     * Toute activité (ex : CalculActivity) doit implémenter cette interface.
      * @param poids poids de la personne
      * @param taille taille de la personne
      * @param age âge de la personne

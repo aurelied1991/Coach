@@ -9,12 +9,12 @@ import retrofit2.converter.gson.GsonConverterFactory;
 /**
  * Classe utilitaire permettant de configurer et fournir une instance de Retrofit
  * pour communiquer avec l'API REST du projet Coach.
- * Implémente un pattern de type Singleton afin d'éviter de recréer plusieurs instances de Retrofit.
+ * Pattern utilisé : Singleton (une seule instance partagée dans toute l'application)
  */
 public class CoachApi {
     // URL de base de l'API (10.0.2.2 = localhost depuis l'émulateur Android)
     private static final String API_URL = "http://10.0.2.2/rest_coach/";
-    // Instance unique de Retrofit (Singleton)
+    // Instance unique de Retrofit
     private static Retrofit retrofit = null;
     // Instance de Gson configurée pour gérer le format des dates
     private static Gson gson = new GsonBuilder()
