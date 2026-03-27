@@ -2,7 +2,8 @@ package com.example.coach.contract;
 
 /**
  * Interface de la vue pour l'affichage des résultats d'IMG
- * Toute activité qui veut afficher un profil doit implémenter cette interface
+ * Elle définit les actions que le Presenter peut demander à l'interface graphique
+ * Toute activité (ex : MainActivity) doit implémenter cette interface.
  */
 public interface ICalculView {
     /**
@@ -14,5 +15,12 @@ public interface ICalculView {
      */
     void afficherResultat(String image, double img, String message, boolean normal);
 
+    /**
+     * Toute activité (ex : MainActivity) doit implémenter cette interface.
+     * @param poids poids de la personne
+     * @param taille taille de la personne
+     * @param age âge de la personne
+     * @param sexe (1 = homme, 0 = femme)
+     */
     void remplirChamps(Integer poids, Integer taille, Integer age, Integer sexe);
 }

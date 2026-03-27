@@ -4,6 +4,7 @@ import java.util.Date;
 
 /**
  * Classe représentant un profil utilisateur pour le calcul de l'IMG
+ * Contient les données saisies + les résultats calculés (IMG)
  */
 public class Profil {
     // Valeurs minimales et maximales de l'IMG selon le sexe
@@ -24,8 +25,9 @@ public class Profil {
     private Date dateMesure;
 
     // Résultats calculés
-    private double img;
-    private int indice;
+    private transient double img;
+    private transient int indice;
+
 
     /**
      * Constructeur du profil et calcul automatique de l'IMG et de l'indice
@@ -85,6 +87,14 @@ public class Profil {
     }
 
     /**
+     * Retourne la date de la mesure
+     * @return
+     */
+    public Date getDateMesure() {
+        return dateMesure;
+    }
+
+    /**
      * Indique si l'IMG du profil est dans la norme
      * @return
      */
@@ -97,7 +107,9 @@ public class Profil {
      * @return
      */
     private double calculImg(){
+        // Conversion taille cm → m
         double tailleMetres = taille / 100.0;
+        // Formule IMG
         return (1.2 * poids / (tailleMetres * tailleMetres))
                 + (0.23 * age)
                 - (10.83 * sexe)

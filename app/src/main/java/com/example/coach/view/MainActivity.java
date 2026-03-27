@@ -19,12 +19,21 @@ import com.example.coach.R;
 import com.example.coach.contract.ICalculView;
 import com.example.coach.presenter.CalculPresenter;
 
+/**
+ * Activité principale de l'application
+ * Gère l'affichage, les interactions utilisateur et communique avec le Presenter
+ */
 public class MainActivity extends AppCompatActivity implements ICalculView {
+    // Champs de saisie utilisateur
     private EditText txtPoids, txtTaille, txtAge;
+    // Boutons radio pour le sexe
     private RadioButton rdHomme, rdFemme;
+    // Affichage du résultat
     private TextView lblIMG;
     private ImageView imgSmiley;
+    // Bouton de calcul
     private Button btnCalc;
+    // Lien avec la logique métier (Presenter)
     private CalculPresenter presenter;
 
     /**
@@ -38,27 +47,32 @@ public class MainActivity extends AppCompatActivity implements ICalculView {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // Active l'affichage plein écran moderne
         EdgeToEdge.enable(this);
+        // Charge le layout XML
         setContentView(R.layout.activity_main);
+        // Gestion des marges système (barre statut/navigation)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+        // Initialisation globale
         init();
     }
 
     /**
-     * Initialise les composants graphiques, le presenter et le listener du bouton de calcul
+     * Initialise les composants et les comportements
      */
     private void init(){
-        chargeObjetsGraphiques();
-        presenter = new CalculPresenter(this);
-        btnCalc.setOnClickListener(v -> btnCalc_clic());
+        chargeObjetsGraphiques(); // Récupération des éléments UI
+        presenter = new CalculPresenter(this); // Création du presenter
+        presenter.chargerDernierProfil(); // Charge les dernières données enregistrées
+        btnCalc.setOnClickListener(v -> btnCalc_clic()); // Association du bouton avec son action
     }
 
     /**
-     * Récupère les éléments de l'interface graphique à partir du layout XML
+     * Associe les variables Java aux composants du layout XML
      */
     private void chargeObjetsGraphiques(){
         txtPoids = findViewById(R.id.txtPoids);
@@ -72,7 +86,8 @@ public class MainActivity extends AppCompatActivity implements ICalculView {
     }
 
     /**
-     * Récupère les données saisies par l'utilisateur, vérifie leur validité puis lance le calcul via le presenter
+     * Méthode appelée lors du clic sur le bouton calcul
+     * Récupère les données, les valide puis lance le calcul
      */
     private void btnCalc_clic(){
         Integer poids = 0, taille = 0, age = 0, sexe = 0;
@@ -81,18 +96,20 @@ public class MainActivity extends AppCompatActivity implements ICalculView {
             poids = Integer.parseInt(txtPoids.getText().toString());
             taille = Integer.parseInt(txtTaille.getText().toString());
             age = Integer.parseInt(txtAge.getText().toString());
-        } catch (Exception ignored) {}
+        } catch (Exception ignored) {
+            // Si erreur de conversion (champ vide ou invalide), on ignore
+        }
 
-        // Détermination du sexe
+        // Détermination du sexe (1 = homme, 0 = femme)
         if (rdHomme.isChecked()) {
             sexe = 1;
         }
 
-        // Vérification des champs
+        // Vérification des champs obligatoires
         if (poids == 0 || taille == 0 || age == 0) {
             Toast.makeText(this, "Veuillez remplir tous les champs", Toast.LENGTH_SHORT).show();
         } else {
-            // Appel au presenter pour effectuer le calcul
+            // Envoie les données au Presenter pour traitement
             presenter.creerProfil(poids, taille, age, sexe);
         }
     }
@@ -106,25 +123,37 @@ public class MainActivity extends AppCompatActivity implements ICalculView {
      */
     @Override
     public void afficherResultat(String image, double img, String message, boolean normal) {
-        // Récupération de l'image correspondante
+        // Récupère l'identifiant de l'image dans les ressources
         int imageId = getResources().getIdentifier(image, "drawable", getPackageName());
+        // Si l'image existe → on l'affiche
         if (imageId != 0) {
             imgSmiley.setImageResource(imageId);
         } else {
+            // Sinon image par défaut
             imgSmiley.setImageResource(R.drawable.normal); // Image par défaut
         }
-        // Construction et affichage du texte
+        // Formatage du texte affiché
         String texte = String.format("%.01f", img) + " : IMG " + message;
+        // Affichage du résultat
         lblIMG.setText(texte);
         // Couleur du texte selon le résultat
         lblIMG.setTextColor(normal ? Color.GREEN : Color.RED);
     }
 
+    /**
+     * Remplit les champs avec un profil existant (appelé par le Presenter)
+     * @param poids poids de la personne
+     * @param taille taille de la personne
+     * @param age âge de la personne
+     * @param sexe (1 = homme, 0 = femme)
+     */
     @Override
     public void remplirChamps(Integer poids, Integer taille, Integer age, Integer sexe) {
+        // Remplissage des champs texte
         txtPoids.setText(poids.toString());
         txtTaille.setText(taille.toString());
         txtAge.setText(age.toString());
+        // Sélection du bon bouton radio
         if (sexe == 1) {
             rdHomme.setChecked(true);
         }else{
